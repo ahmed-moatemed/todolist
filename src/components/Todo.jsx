@@ -8,36 +8,15 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useContext, useState } from 'react';
 import { TodoContext } from '../context/TodoContext';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 
 
-function Todo({ todo }) {
+function Todo({ todo, ShowDelete, ShowEdit }) {
   const { todos, setTodos } = useContext(TodoContext);
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [showEditDialog, setShowEditDialog] = useState(false);
-  const [updatedTodos, setUpdatedTodos] = useState({ title: todo.title, description: todo.description });
 
   // open and close dialogs
-  const handleDeleteOpen = () => {
-    setShowDeleteDialog(true);
-  };
+  
 
-  const handleDeleteClose = () => {
-    setShowDeleteDialog(false);
-  };
-
-  const handleEditOpen = () => {
-    setShowEditDialog(true);
-  };
-
-  const handelEditClose = () => {
-    setShowEditDialog(false);
-  };
+  
 
   //==============================
 
@@ -53,103 +32,10 @@ function Todo({ todo }) {
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
   }
 
-  function handleDeleteClick(todoId) {
-    const updatedTodos = todos.filter((todo) => todo.id !== todoId);
-    setTodos(updatedTodos);
-    localStorage.setItem('todos', JSON.stringify(updatedTodos));
-    handleDeleteClose();
-  }
-
-  function handleEditClick() {
-    const updatedTodosList = todos.map((t) => {
-      if (t.id === todo.id) {
-        return { ...t, title: updatedTodos.title, description: updatedTodos.description };
-      }
-      return t;
-    });
-    setTodos(updatedTodosList);
-    localStorage.setItem('todos', JSON.stringify(updatedTodos));
-    handelEditClose();
-  }
   //==============================
 
   return (
     <>
-      {/* delete model */}
-      <Dialog
-        style={{ direction: 'rtl' }}
-        open={showDeleteDialog}
-        onClose={handleDeleteClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"هل تريد حذف هذه المهمة ؟"}
-        </DialogTitle>
-        <DialogActions>
-          <Button onClick={handleDeleteClose}>الغاء</Button>
-          <Button onClick={() => {
-            handleDeleteClick(todo.id);
-          }} autoFocus>
-            نعم
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {/*==== delete model ====*/}
-
-      {/* Edit model */}
-      <Dialog
-        style={{ direction: 'rtl' }}
-        open={showEditDialog}
-        onClose={handelEditClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"تعديل المهمة"}
-        </DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            name="email"
-            label="اسم المهمة"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={updatedTodos.title}
-            onChange={(e) => {
-              setUpdatedTodos({ ...updatedTodos, title: e.target.value });
-            }}
-          />
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            name="email"
-            label="تفاصيل المهمة"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={updatedTodos.description}
-            onChange={(e) => {
-              setUpdatedTodos({ ...updatedTodos, description: e.target.value });
-            }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handelEditClose}>الغاء</Button>
-          <Button onClick={() => {
-            handleEditClick();
-          }} autoFocus>
-            نعم
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {/* Edit model */}
 
       <Card className='cardTodo'
         sx={{
@@ -207,7 +93,7 @@ function Todo({ todo }) {
                   backgroundColor: '#fff', 
                   border: 'solid 3px #1769aa ' 
                 }} onClick={() => {
-                  handleEditOpen();
+                  ShowEdit(todo);
                 }}
               >
                 <EditOutlinedIcon />
@@ -219,7 +105,7 @@ function Todo({ todo }) {
                   backgroundColor: '#fff', 
                   border: 'solid 3px #b23c17 ' 
                 }} onClick={() => {
-                  handleDeleteOpen();
+                  ShowDelete(todo);
                 }}
               >
                 <DeleteOutlinedIcon />
