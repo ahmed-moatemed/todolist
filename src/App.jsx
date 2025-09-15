@@ -22,24 +22,7 @@ const theme = createTheme({
 });
 
 const intialTodos = [
-  {
-    id: uuidv4(),
-    title: 'تعلم الجافا سكريبت',
-    description: 'تعلم الاساسيات',
-    isCompleted: false
-  },
-  {
-    id: uuidv4(),
-    title: 'تعلم الرياكت',
-    description: 'تعلم الاساسيات',
-    isCompleted: false
-  },
-  {
-    id: uuidv4(),
-    title: 'تعلم الماتيريال يو اي',
-    description: 'تعلم الاساسيات',
-    isCompleted: false
-  }
+  
 ]
 
 function App() {
