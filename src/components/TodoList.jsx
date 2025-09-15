@@ -11,7 +11,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Container } from '@mui/material';
 import Todo from './Todo';
 
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useMemo } from 'react';
 import { TodoContext } from '../context/TodoContext';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -22,8 +22,18 @@ export default function TodoList() {
   const { todos, setTodos } = useContext(TodoContext);
   const [filter, setFilter] = useState('all');
 
-  const completedTodos = todos.filter((todo) => todo.isCompleted === true);
-  const notCompletedTodos = todos.filter((todo) => todo.isCompleted === false);
+  
+  const completedTodos = useMemo(() => {
+    return todos.filter((todo) => {
+      return todo.isCompleted;
+    });
+  }, [todos]);
+
+  const notCompletedTodos = useMemo(() => {
+    return todos.filter((todo) => {
+      return !todo.isCompleted;
+    });
+  }, [todos]);
 
   let todosToRendered = todos;
 
