@@ -13,6 +13,7 @@ import Todo from './Todo';
 
 import { useState, useContext, useEffect, useMemo } from 'react';
 import { TodoContext } from '../context/TodoContext';
+import { ToastContext } from '../context/ToastContext';
 import { v4 as uuidv4 } from 'uuid';
 
 import Dialog from '@mui/material/Dialog';
@@ -26,6 +27,8 @@ export default function TodoList() {
   const [detInput, setDetInput] = useState('');
   const { todos, setTodos } = useContext(TodoContext);
   const [filter, setFilter] = useState('all');
+
+  const {showToast} = useContext(ToastContext);
 
   // delete model
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -60,6 +63,7 @@ export default function TodoList() {
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
     setTittleInput('');
     setDetInput('');
+    showToast('تمت اضافه المهمه بنجاح');
   }
 
   function displayTodosFilter(e) {
@@ -84,6 +88,7 @@ export default function TodoList() {
     setTodos(updatedTodos);
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
     handleDeleteDialogClose();
+    showToast('تم حذف المهمه بنجاح', 'error');
   }
   //==============================
 
@@ -107,6 +112,7 @@ export default function TodoList() {
     setTodos(updatedTodosList);
     localStorage.setItem('todos', JSON.stringify(updatedTodosList));
     handelEditClose();
+    showToast('تم تعديل المهمه بنجاح', 'info');
   }
   //==============================
 

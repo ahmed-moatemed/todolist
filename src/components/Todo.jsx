@@ -6,19 +6,14 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { TodoContext } from '../context/TodoContext';
+import { ToastContext } from '../context/ToastContext';
 
 
 function Todo({ todo, ShowDelete, ShowEdit }) {
   const { todos, setTodos } = useContext(TodoContext);
-
-  // open and close dialogs
-  
-
-  
-
-  //==============================
+  const {showToast} = useContext(ToastContext);
 
   // Function to handle check, delete and edit
   function handelCheckClick(todoId) {
@@ -30,8 +25,8 @@ function Todo({ todo, ShowDelete, ShowEdit }) {
     })
     setTodos(updatedTodos);
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
+    showToast('تم تحديث حالة المهمه', 'success');
   }
-
   //==============================
 
   return (
