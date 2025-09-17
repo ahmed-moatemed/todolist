@@ -12,7 +12,6 @@ import { Container } from '@mui/material';
 import Todo from './Todo';
 
 import { useState, useContext, useEffect, useMemo } from 'react';
-import { TodoContext } from '../context/TodoContext';
 import { ToastContext } from '../context/ToastContext';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -21,11 +20,14 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import { useTodos, useTodosDispatch } from '../context/TodoContext';
 
 export default function TodoList() {
+  const todos = useTodos();
+  const dispatch = useTodosDispatch();
+
   const [tittleInput, setTittleInput] = useState('');
   const [detInput, setDetInput] = useState('');
-  const { todos, setTodos } = useContext(TodoContext);
   const [filter, setFilter] = useState('all');
 
   const {showToast} = useContext(ToastContext);
@@ -42,25 +44,15 @@ export default function TodoList() {
   
 
   useEffect(() => {
-    const storageTodos = JSON.parse(localStorage.getItem('todos'))?? [];
-    setTodos(storageTodos);
+    dispatch({type: 'get'});
   }, []);
 
   // Adding and Filtering
   function handelAddClick() {
-    if (tittleInput === '') {
-      alert('يرجى ادخال عنوان المهمه');
-      return;
-    }
-    const newTodo = {
-      id: uuidv4(),
-      title: tittleInput,
-      description: detInput,
-      isCompleted: false
-    }
-    const updatedTodos = [...todos, newTodo];
-    setTodos(updatedTodos);
-    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+    dispatch({type: 'added', payload: {
+      tittle: tittleInput,
+      description: detInput
+    }});
     setTittleInput('');
     setDetInput('');
     showToast('تمت اضافه المهمه بنجاح');
@@ -82,11 +74,7 @@ export default function TodoList() {
   };
 
   function handleDeleteClick() {
-    const updatedTodos = todos.filter((t) => {
-      return t.id !== dialogTodo.id;
-    });
-    setTodos(updatedTodos);
-    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+    dispatch({type: 'deleted', payload: dialogTodo});
     handleDeleteDialogClose();
     showToast('تم حذف المهمه بنجاح', 'error');
   }
@@ -103,14 +91,7 @@ export default function TodoList() {
   };
 
   function handleEditClick() {
-    const updatedTodosList = todos.map((t) => {
-      if (t.id === dialogTodo.id) {
-        return { ...t, title: dialogTodo.title, description: dialogTodo.description };
-      }
-      return t;
-    });
-    setTodos(updatedTodosList);
-    localStorage.setItem('todos', JSON.stringify(updatedTodosList));
+    dispatch({type: 'edited', payload: dialogTodo});
     handelEditClose();
     showToast('تم تعديل المهمه بنجاح', 'info');
   }

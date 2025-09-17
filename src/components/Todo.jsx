@@ -7,24 +7,17 @@ import IconButton from '@mui/material/IconButton';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useContext } from 'react';
-import { TodoContext } from '../context/TodoContext';
+import { useTodosDispatch } from '../context/TodoContext';
 import { ToastContext } from '../context/ToastContext';
 
 
 function Todo({ todo, ShowDelete, ShowEdit }) {
-  const { todos, setTodos } = useContext(TodoContext);
+  const dispatch = useTodosDispatch();
   const {showToast} = useContext(ToastContext);
 
   // Function to handle check, delete and edit
-  function handelCheckClick(todoId) {
-    const updatedTodos = todos.map((todo) => {
-      if (todo.id === todoId) {
-        todo.isCompleted = !todo.isCompleted;
-      }
-      return todo;
-    })
-    setTodos(updatedTodos);
-    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+  function handelCheckClick() {
+    dispatch({type: 'cheched', payload: todo});
     showToast('تم تحديث حالة المهمه', 'success');
   }
   //==============================
@@ -76,7 +69,7 @@ function Todo({ todo, ShowDelete, ShowEdit }) {
                   backgroundColor: todo.isCompleted ? '#8bc34a':'#fff', 
                   border: 'solid 3px #8bc34a' 
                 }} onClick={() => {
-                  handelCheckClick(todo.id);
+                  handelCheckClick();
                 }}
               >
                 <CheckOutlinedIcon />

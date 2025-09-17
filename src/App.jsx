@@ -3,7 +3,7 @@ import './App.css'
 import TodoList from './components/TodoList'
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
-import { TodoContext } from './context/TodoContext';
+import TodosProvider from './context/TodoContext';
 import MySnakBar from './components/MySnakBar';
 import { ToastContext } from './context/ToastContext';
 
@@ -26,12 +26,7 @@ const theme = createTheme({
   }
 });
 
-const intialTodos = [
-  
-]
-
 function App() {
-  const [todos, setTodos] = useState(intialTodos);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [color, setColor] = useState('success');
@@ -48,12 +43,12 @@ function App() {
   return (
     <>
     <ThemeProvider theme={theme}>
+      <TodosProvider>
       <ToastContext.Provider value={{showToast}}>
-        <MySnakBar open={open} message={message} color={color} />
-        <TodoContext.Provider value={{todos, setTodos}}>
-          <TodoList />
-        </TodoContext.Provider>
+        <MySnakBar open={open} message={message} color={color}/>
+        <TodoList />
       </ToastContext.Provider>
+      </TodosProvider>
     </ThemeProvider>
     </>
   )
