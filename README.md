@@ -1,12 +1,81 @@
-# React + Vite
+# Task Management App ✅
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+تطبيق متكامل لإدارة وتنظيم المهام اليومية، يساعدك في تتبع أعمالك وتحديد أولوياتك بسهولة.  
+تم بناؤه باستخدام **React + Context API + Reducer** مع واجهة عصرية باستخدام **Material UI** ودعم كامل لـ **Local Storage** لحفظ البيانات.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔗 Live Demo  
+👉 https://todolistmo3.netlify.app/
 
-## Expanding the ESLint configuration
+## 🗂️ GitHub Repository  
+👉 https://github.com/ahmed-moatemed/todolist
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 📸 Preview 
+![Task App Screenshot](./public/todolist.png)
+
+
+
+
+---
+
+## 🚀 Features
+- إضافة المهام الجديدة  
+- تعديل المهام (Edit Task)  
+- حذف المهام (Delete Task)  
+- تحديد المهام كمكتملة  
+- تصفية المهام عبر الفلاتر (All / Completed / Pending)  
+- تخزين البيانات في **Local Storage** للحفاظ عليها بعد الإغلاق  
+- تصميم متجاوب بالكامل لجميع الأجهزة  
+- استخدام **Reducer** لإدارة منطق الحالة المعقدة  
+- استخدام **Context API** لإدارة الحالة على مستوى التطبيق  
+- تصميم عصري باستخدام **Material UI**
+
+---
+
+## 🛠️ Technologies Used
+- **React.js (Vite)**  
+- **Material UI (MUI)**  
+- **Context API**  
+- **useReducer Hook**  
+- **Local Storage**  
+- **JavaScript (ES6+)**  
+- **Responsive CSS**  
+
+---
+
+## 📦 Installation & Run Locally
+
+```bash
+# Clone repository
+git clone https://github.com/ahmed-moatemed/todolist.git
+
+# Open project folder
+cd todolist
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```
+
+---
+
+## 📝 Notes
+- جميع البيانات يتم حفظها في Local Storage بشكل تلقائي.  
+- يمكن تطوير المشروع بإضافة:
+  - نظام أولويات (High / Medium / Low)  
+  - صفحة لإحصائيات المهام  
+  - نظام تسجيل دخول (Authentication)  
+  - مزامنة البيانات بقاعدة بيانات حقيقية (Firebase / Supabase)  
+  - Dark / Light Theme  
+
+---
+
+## ✨ Author
+Developed by **Ahmed Ibrahim Moatemed**  
+📧 Email: matamedahmed@gmail.com  
+🔗 Portfolio: https://mo3temed.netlify.app/
